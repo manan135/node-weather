@@ -3,10 +3,13 @@ const express = require('express');
 const hbs = require('hbs');
 const forecast = require('./utils/forecast');
 
-// app.use(express.static());
+const app = express();
+const dirPath = path.join(__dirname, '../public');
+app.use(express.static(dirPath));
+
 const viewsPath = path.join(__dirname, "../templates/views");
 const partialsPath = path.join(__dirname, "../templates/partials");
-const app = express();
+
 app.set('view engine', 'hbs');
 app.set('views', viewsPath);
 hbs.registerPartials(partialsPath);
@@ -51,21 +54,21 @@ app.get('/products', (req, res) => {
 
 })
 
-// app.get('/help/*', (req, res) => {
-//     res.render('404', {
-//         title: "Error",
-//         msg: "Help Page doesn't exist",
-//         code: "4042"
-//     });
-// })
+app.get('/help/*', (req, res) => {
+    res.render('404', {
+        title: "Error",
+        msg: "Help Page doesn't exist",
+        code: "4042"
+    });
+})
 
-// app.get('*', (req, res) => {
-//     res.render('404', {
-//         title: "Error",
-//         msg: "Page doesn't exist",
-//         code: "4041"
-//     });
-// })
+app.get('*', (req, res) => {
+    res.render('404', {
+        title: "Error",
+        msg: "Page doesn't exist",
+        code: "4041"
+    });
+})
 
 app.listen(3000, () => {
     console.log("Server started");
